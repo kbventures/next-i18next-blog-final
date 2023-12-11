@@ -1,0 +1,14 @@
+Change the css styles so it doesn't look like the original
+
+module.exports = {
+  transform: {
+    '^.+\\.(ts|tsx)$': ['ts-jest', { tsConfig: './tsconfig.test.json' }],
+    '^.+\\.(js|jsx)$': 'babel-jest',
+  },
+  testRegex: '(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$',
+  moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'node'],
+  moduleNameMapper: {
+    '^src/(.*)$': '<rootDir>/src/$1',
+  },
+  testEnvironment: 'jest-environment-jsdom',
+};

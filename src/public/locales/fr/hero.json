@@ -1,0 +1,9 @@
+{
+  "helloword": "Bonjour Monde!",
+  "title": "Mise en place de l'internationalisation dans Next.js avec \"next-i18next\"",
+  "first-paragraph": "Ce blog vous guidera étape par étape dans l'internationalisation et la localisation de votre contenu statique à l'aide de Next.js et next-i18next.",
+  "links": {
+      "blog-link": "Lire le blog complet",
+      "github-blog-link": "Github"
+  }
+}
