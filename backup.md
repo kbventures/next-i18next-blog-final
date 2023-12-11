@@ -8,7 +8,7 @@ As a software engineer, it's likely something you’ll need to learn, as making 
 
 In some geopolitical regions, there are laws requiring governments and companies to offer services in more than one language, and internationalizing your web application and localizing content is a must, not a choice.
 
-This blog will walk you through step by step how to internationalize and localize your static content using Next.js and next-i18next.
+This blog will walk you through step by step how to internationalize and localize your static content using `Next.js` and `next-i18next`.
 
 In case you didn't know, internationalizing has to do with making your web application able to support several languages while localization takes care of the actual language translation aspects.
 
@@ -18,11 +18,11 @@ In this guide, we’ll be using Next.js, Typescript, Tailwind CSS, a next-i18nex
 
 Having some basic React, Javascript, HTML & CSS skills is a requirement for this tutorial.
 
-You'll also need to have \[Node.js, and NPM\]([https://nodejs.org/en/download](https://nodejs.org/en/download)) installed in order to complete this tutorial.
+You'll also need to have \[Node.js, and NPM\]([https://nodejs.org/en/download](https://nodejs.org/en/download)) installed to complete this tutorial.
 
 \[Next.js\]([https://nextjs.org/](https://nextjs.org/)) is a popular open-source framework for building web applications with React.
 
-If you've ever had the pleasure of building applications only using vanilla React web applications you'll come to appreciate how Next.js makes it easy to build server-side rendered or static-site-generation, automatic code splitting, zero-configuration web applications with a rich echo system, developer experience, and community support.
+If you've ever had the pleasure of building applications only using vanilla React web applications you'll come to appreciate how Next.js makes it easy to build server-side rendered or static-site-generation, automatic code splitting, zero-configuration web applications with a rich echo system, and developer experience.
 
 \[Typescript\]([https://www.typescriptlang.org/](https://www.typescriptlang.org/)) is a language superset of Javascript. It enforces type safety which makes your applications robust, and scalable. It provides a powerful intelligence tool for finding and solving type safety errors pre-build.
 
@@ -44,7 +44,7 @@ While react-i18next provides support for the i18n standard for react apps, it re
 
 ## Project Setup
 
-First, we will need to create a Next.js application.
+First, we will need to create a `Next.js` application.
 
 In your chosen terminal type the following and then press enter:
 
@@ -54,9 +54,9 @@ npx create-next-app next-blog
 
 \[NPX\]([https://docs.npmjs.com/cli/v8/commands/npx](https://docs.npmjs.com/cli/v8/commands/npx)) is a package runner that comes with NPM that allows you to run packages without installing them globally.
 
-\[Create-next-app\]\[[https://nextjs.org/docs/pages/api-reference/create-next-app](https://nextjs.org/docs/pages/api-reference/create-next-app)\] is a package utility to set up a Next.js app and the @latest flag selects to install the most up-to-date version.
+\[Create-next-app\]\[[https://nextjs.org/docs/pages/api-reference/create-next-app](https://nextjs.org/docs/pages/api-reference/create-next-app)\] is a package utility to set up a `Next.js` app.
 
-Next.js supports many of the tools we will be using out of the box and configured for you.
+Next.js supports many of the tools we will be using out of the box and are configured for you.
 
 You will be prompted with the following:
 
@@ -72,9 +72,9 @@ npx create-next-app next-blog
 Creating a new Next.js app in ...
 ```
 
-To follow along with this tutorial choose yes for Typescript, Tailwind CSS, no for src directory (we'll cover how to set the SRC directory once basic setups are covered), and the App Router, and click on yes for the default import alias(Choose the default "@/\*" import alias).
+To follow along with this tutorial choose yes for Typescript, Tailwind CSS, no for `src` directory (we'll cover how to set the SRC directory once basic setups are covered), and the App Router, and click on yes for the default import alias(Choose the default "@/\*" import alias).
 
-From the root of the project `next-blog` We will also need to install the following package:
+From the root of the project `next-blog` We will also need to install the following packages:
 
 ```bash
 npm i next-i18next
@@ -115,7 +115,7 @@ Your respective `en` and `fr` directories `hero.json` file will contain:
     "first-paragraph":"This blog will walk you through step by step how to internationalize and localize your static content using Next.js and next-i18next.",
     "links":{
       "blog-link":"Read the full blog",
-      "github-blog-link":"Github", 
+      "github-blog-link":"Github"
     }
   }
 ```
@@ -132,13 +132,13 @@ Your respective `en` and `fr` directories `hero.json` file will contain:
 }
 ```
 
-... and the respective to `navbar.json`:
+... and the respective `navbar.json`:
 
 ```json
 {
     "product": "Nested Directory",
     "features":"Features",
-    "blog":"Blog"
+    "main":"Principale"
   }
 ```
 
@@ -146,13 +146,13 @@ Your respective `en` and `fr` directories `hero.json` file will contain:
 {
     "product": "Produit",
     "features": "Fonctionnalités",
-    "blog": "Blog"
+    "main": "Principale"
 }
 ```
 
 And finally the language selector translation files:
 
-```bash
+```json
 {
   "english": "English",
   "french":"French",
@@ -160,7 +160,7 @@ And finally the language selector translation files:
   }
 ```
 
-```bash
+```json
 {
   "english":"Anglais",
   "french":"Francais",
@@ -170,9 +170,9 @@ And finally the language selector translation files:
 
 ### Configuration
 
-Create a "next-i18next.config.js" file at the root of your project.
+Create a `next-i18next.config.js` file at the root of your project:
 
-```javascript
+```typescript
 module.exports = {
     i18n: {
       locales: ["en", "fr"],
@@ -182,13 +182,13 @@ module.exports = {
   };
 ```
 
-Our configuration file specifies the default locale language and which locale languages are available in this application. The default namespace file is `common.json`, since we are not using `common.json` in this project we must include a `defaultNS` property and the file name in the config file. We are exporting this i18n configured object so that it is available to our next.config.js file.
+Our configuration file specifies the default locale language and which locale languages are available in this application. The default namespace file is `common.json` but since we are not using it in this project we must include a `defaultNS` property and the file name in the config file. We are exporting this i18n configured object so that it is available to our next.config.js file.
 
 The i18n configuration object is provided by the next-i18next package.
 
-Modify your "next.config.js" file:
+Modify your `next.config.js` file:
 
-```javascript
+```typescript
 const { i18n } = require("./next-i18next.config");
 
 /** @type {import('next').NextConfig} */
@@ -217,7 +217,7 @@ The `useTranslation` hook and `withTranslation` HOC is used within your componen
 
 First in `_app.tsx`, which normally is where we find the common layout and component structures we can replace the entire file with:
 
-```javascript
+```typescript
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
 import { appWithTranslation } from "next-i18next";
@@ -235,6 +235,8 @@ export default appWithTranslation(MyApp);
 We are essentially wrapping the entire application and enabling i18n internationalization features to be available everywhere in the application.
 
 In our tutorial let's imagine that our data is static, meaning it won't change and doesn't need to be rebuilt every time the content is accessed by the user. This will make it faster to access.
+
+(In upcoming Part 2 of this blog we will cover cases where the data is dynamic and stems for a Database.)
 
 In your main `index.tsx` file, which is the main entry point of your app:
 
@@ -264,7 +266,7 @@ export const getStaticProps = async ({ locale }: GetStaticPropsContext) => {
 export default Index;
 ```
 
-The translation content from common.json for French and English language props will now be available to all our components found in the index. js through the use of...
+The translation content from hero.json for French and English language props will now be available to all our components found in the index. js through the use of...
 
 `const { t } = useTranslation("hero");` which provides translation functionality within the respective functional components.
 
@@ -292,13 +294,11 @@ A very subtle change:
 
 `...(await serverSideTranslations(locale as string, ["hero", "navigation/navbar", "navigation/language-selector"])),`
 
-One namespace is in its specific locale (e.g., "en" or "fr"), and the others are nested within the locales' root ("/navigation").
+One namespace is in its specific locale (e.g., "en" or "fr"), and the others are nested within the locales `navigation` folder.
 
-This array structure allows you to fetch translations from several namespaces, enabling internationalization for your components or pages.
+This array structure allows you to fetch translations from several namespaces, for your components or pages.
 
-Were almost ready to give our application its first run!
-
-Okay, now let's see if it works.
+We are ready to give our application its first run!
 
 From the root of your project...
 
@@ -330,11 +330,10 @@ Replace `index.tsx` with the following:
 
 ```typescript
 ...
-
-// New Components
+import Layout from "../components/Layout"
 import Hero from "../components/Hero"
 import Navbar from "../components/Navbar"
-import Layout from "../components/Layout"
+
 
 const Index = () => {
   return (
@@ -344,7 +343,6 @@ const Index = () => {
   </Layout>
   );
 };
-
 ...
 ```
 
@@ -372,7 +370,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
 export default Layout;
 ```
 
-This code is a React component named "Layout" that takes a single prop called "children," which is of type ReactNode. The component renders a div element with a CSS class for centering content and providing different padding sizes based on the screen size.
+This code is a React component named `Layout` that takes a single prop called `children` which is of type ReactNode. The component renders a div element with a CSS class for centering content and providing different padding sizes based on the screen size.
 
 `Hero.tsx`
 
@@ -444,7 +442,15 @@ const Hero = () => {
 export default Hero;
 ```
 
-This code defines a React component named "Hero" that represents a section of a website's landing page, containing text and an image, with responsive styling and links to a blog and a GitHub repository.
+This code defines a React component named `Hero` that represents a section of a website's landing page, containing text and an image, with responsive styling and links to a blog and a GitHub repository.
+
+You will need to download an image from this repository and name it `translation`.
+
+[Image Link](https://github.com/kbventures/next-i18next-blog-edit/blob/main/src/public/img/translation.jpg)
+
+![](https://cdn.hashnode.com/res/hashnode/image/upload/v1702071383059/c1c34843-506f-47c7-8e41-9573cb37f7cb.png align="center")
+
+And move that image to the `public` directory from the root of the project.
 
 We also have a `Container.tsx` utility component.
 
@@ -475,6 +481,8 @@ This code creates a reusable box for content with optional styling, so you can e
 
 And finally our `Navbar.tsx` component:
 
+// TO BE DELETED LATER //
+
 ```typescript
 import Link from "next/link";
 import { useTranslation } from "next-i18next";
@@ -484,7 +492,7 @@ const Navbar = () => {
   const navigation = [
     "product",
     "features",
-    "blog",
+    "main",
   ];
 
   return (
@@ -494,8 +502,13 @@ const Navbar = () => {
           <ul className="items-center justify-end flex-1 pt-6 list-none lg:pt-0 lg:flex">
             {navigation.map((menu, index) => (
               <li className="mr-3 nav__item" key={index}>
-                <Link href="/" className="inline-block px-4 py-2 text-lg font-normal text-gray-800 no-underline rounded-md dark:text-gray-200 hover:text-indigo-500 focus:text-indigo-500 focus:bg-indigo-100 focus:outline-none dark:focus:bg-gray-800">
-                    {menu}
+                  <Link
+                  href={menu === "main" ? "/" : `/${menu}`}
+                  className={`inline-block px-4 py-2 text-lg font-normal text-gray-800 no-underline rounded-md dark:text-gray-200 hover-text-indigo-500 focus-text-indigo-500 focus-bg-indigo-100 focus-outline-none dark-focus-bg-gray-800 ${
+                    router.pathname === (menu === "main" ? "/" : `/${menu}`) ? "highlighted-link" : ""
+                  }`}
+                >
+                  {navbarT(`${menu}`)}
                 </Link>
               </li>
             ))}
@@ -514,7 +527,72 @@ const Navbar = () => {
 export default Navbar;
 ```
 
-This code generates a responsive navigation bar with links to "product," "features," "blog," and a language selector.
+```typescript
+import Link from "next/link";
+
+const Navbar = () => {
+
+  const navigation = [
+    "Product",
+    "Features",
+    "Main",
+  ];
+
+  return (
+    <div className="w-full">
+      <nav className="container relative flex flex-wrap items-center justify-between p-8 mx-auto lg:justify-between xl:px-0">
+        <div className="hidden text-center lg:flex lg:items-center">
+          <ul className="items-center justify-end flex-1 pt-6 list-none lg:pt-0 lg:flex">
+            {navigation.map((menu, index) => (
+              <li className="mr-3 nav__item" key={index}>
+                  <Link
+                  href="/"
+                >
+                  {menu}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div className="hidden mr-3 space-x-4 lg:flex nav__item">
+          <Link href="/" className="px-6 py-2 text-white bg-indigo-600 rounded-md md:ml-5">
+              Language Selector Will Go Here
+          </Link>
+        </div>
+      </nav>
+    </div>
+  );
+}
+
+export default Navbar;
+```
+
+This code generates a responsive navigation bar with a list of links: "Product," "Features," "Blog," and a language selector.
+
+You'll need to create `styles/custom-styles.css`
+
+```typescript
+/* custom-styles.css */
+
+.highlighted-link {
+    background-color: #AF87EA;
+    color: #000;
+    font-weight: bold;
+    /* Add more custom styling as needed */
+  }
+```
+
+You will need to import this file in `styles/global.css`
+
+```typescript
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Import your custom CSS here */
+@import './custom-styles.css';
+...
+```
 
 So now we have the aesthetics basics in place.
 
@@ -600,6 +678,8 @@ export default Hero;
 
 So we are again demonstrating a simple component translation but this time we are also demonstrating the use of nested JSON properties.
 
+// WORKING UNTIL HERE
+
 Okay now replace the code in the `Navbar.tsx` component:
 
 ```typescript
@@ -613,7 +693,7 @@ const Navbar = () => {
   const navigation = [
     "product",
     "features",
-    "blog",
+    "main",
   ];
 
   return (
@@ -624,18 +704,19 @@ const Navbar = () => {
           <ul className="items-center justify-end flex-1 pt-6 list-none lg:pt-0 lg:flex">
             {navigation.map((menu, index) => (
               <li className="mr-3 nav__item" key={index}>
-                <Link href="/" className="inline-block px-4 py-2 text-lg font-normal text-gray-800 no-underline rounded-md dark:text-gray-200 hover:text-indigo-500 focus:text-indigo-500 focus:bg-indigo-100 focus:outline-none dark:focus:bg-gray-800">
-                {navbarT(`${menu}`)}
+                 <Link
+                  href={menu === "main" ? "/" : `/${menu}`}
+                  className="inline-block px-4 py-2 text-lg font-normal text-gray-800 no-underline rounded-md dark:text-gray-200 hover-text-indigo-500 focus-text-indigo-500 focus-bg-indigo-100 focus-outline-none dark-focus-bg-gray-800"
+                >
+                  {navbarT(`${menu}`)}
                 </Link>
               </li>
             ))}
           </ul>
         </div>
-        <div className="hidden mr-3 space-x-4 lg:flex nav__item">
-          <Link href="/" className="px-6 py-2 text-white bg-indigo-600 rounded-md md:ml-5">
+         <div className="hidden mr-3 space-x-4 lg:flex nav__item">
               Language Selector Will Go Here
-          </Link>
-        </div>
+         </div>
       </nav>
     </div>
   );
@@ -647,8 +728,6 @@ export default Navbar;
 `{ t: navbarT }` destructures the result of `useTranslation("navigation/navbar")`. The `t` property is the translation function, and it's being assigned to the variable `navbarT`. This allows you to use `navbarT` to access translated strings specific to the "navigation/navbar" namespace within your `Navbar` component. The same destructuring is happening for `const { t: languageSelectorT } = useTranslation("navigation/language-selector");`.
 
 These variables (`navbarT` and `languageSelectorT`) can then be used to access translated strings within your `Navbar` component or the language selector component(which we haven't set yet).
-
-EDITING START
 
 ![](https://cdn.hashnode.com/res/hashnode/image/upload/v1695831154304/587e38b1-98e8-4f0f-8e07-546a359558fb.jpeg align="center")
 
@@ -696,7 +775,7 @@ After that, you'll need to update your `tsconfig.json` file:
     './src/components/**/*.{js,ts,jsx,tsx,mdx}',
     './src/app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
-... 
+...
 ```
 
 And finally,
@@ -751,7 +830,7 @@ const LanguageSelector = () => {
 export default LanguageSelector;
 ```
 
-As mentioned before next.js has URL routing setup for internationalization built under the hood. To take advantage of URL routing we'll be using the `useRouter` hook which gives you access to the router object. You can use it to manage navigation and access route information.
+As mentioned before next.js has a URL routing setup for internationalization built under the hood. To take advantage of URL routing we'll be using the `useRouter` hook which gives you access to the router object. You can use it to manage navigation and access route information.
 
 Let's break down the destructured variables and the function in the provided code:
 
@@ -798,11 +877,8 @@ import LanguageSelector from "@/src/components/LanguageSelector";
 
 const Navbar = () => {
 ...
-
-        <div className="hidden mr-3 space-x-4 lg:flex nav__item">
-          <Link href="/" className="px-6 py-2 text-white bg-indigo-600 rounded-md md:ml-5">
+     <div className="hidden mr-3 space-x-4 lg:flex nav__item">
               <LanguageSelector />
-          </Link>
         </div>
       </nav>
     </div>
@@ -815,112 +891,69 @@ export default Navbar;
 
 You should now be able to select a language using the drop-down menu.
 
-CURRENT EDITING POINT(Need to update link encapsulating Language Selector)
-
 Now what happens if we switch the language but go to another page?
 
 Let's find out:
 
-Modify pages/index.tsx:
+Create `pages/product/index.tsx`:
 
-```javascript
+```typescript
 import { GetStaticPropsContext } from "next";
-
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { useTranslation } from "next-i18next";
+import Hero from "@components/Hero";
+import Navbar from "@components/Navbar";
+import Layout from "@components/Layout";
 
-import LanguageSelector from "../components/LanguageSelector/index";
-import Copywright from "../components/Copywright";
-import NestedDirectory from "../components/NestedDirectory";
-
-import Link from "next/link"
-
-const Index = () => {
-  const { t } = useTranslation("common");
+const Product = () => {
 
   return (
-    <div>
-        <h1>{t("helloworld")}</h1>
-        <LanguageSelector />
-        <NestedDirectory/>
-        <Copywright/>
-        <Link href="/testingroute">{t("newroute")}</Link>
-    </div>
+    <Layout> 
+      <Navbar />
+      <Hero />
+    </Layout>
   );
 };
 
 export const getStaticProps = async ({ locale }: GetStaticPropsContext) => {
   return {
     props: {
-      ...(await serverSideTranslations(locale as string, ["common","language-selector","directorynesting/other"])),
+      ...(await serverSideTranslations(locale as string, ["hero", "navigation/navbar", "navigation/language-selector"])),
     },
   };
 };
 
-export default Index;
+export default Product;
 ```
 
-We are using "next/link" a component provided by Next.js used for client-side navigation.
+We already set up links for our navigation bar links in earlier steps which will support the root and products page. We are using `next/link` which is a component in Next.js that enables client-side navigation between pages in your application by preloading the linked page for improved user experience.
 
 Create the following subdirectory in pages and add a new index.tsx file:
 
-```javascript
-|-- pages/
-        |-- testing/
-        |   |-- index.tsx
-```
-
-...add the following to this newly created index.tsx file:
-
-```javascript
-import { GetStaticPropsContext } from "next";
-
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { useTranslation } from "next-i18next";
-
-import LanguageSelector from "../../components/LanguageSelector";
-
-import Link from "next/link";
-const Index = () => {
-  const { t } = useTranslation("common");
-
-  return (
-    <div>
-        <h1>{t("newroute")}</h1>
-        <LanguageSelector/>
-        <Link href="/">{t("homepage")}</Link>
-    </div>
-  );
-};
-
-export const getStaticProps = async ({ locale }: GetStaticPropsContext) => {
-  return {
-    props: {
-      ...(await serverSideTranslations(locale as string, ["common","language-selector"])),
-    },
-  };
-};
-
-export default Index;
-```
-
-Next.js will automatically recognize this as a new URL path.
+Next.js will automatically recognize these URL paths.
 
 \[Linking and navigating\]([https://nextjs.org/docs/pages/building-your-application/routing/linking-and-navigating](https://nextjs.org/docs/pages/building-your-application/routing/linking-and-navigating))
 
-\*\*http://localhost:3000/testing\*\*
+Navigate by either using the URL or clicking on the `Product` the link we just created.
 
-Now try changing the language to French using our newly created dropdown menu, and then click on the link to take us to the new route, change the language back to English, and then click on the link to take us back to the home menu. Notice the changes survive the navigating to new pages.
+`http://localhost:3000/product`
 
-From the home page change the language to French, now CTRL-C in your terminal and restart your app and restart your app from localhost:3000.
+Now try changing the language to French using our newly created dropdown menu, and then click on the `Principale` link to take us back to the home page `/`, Notice the language changes survive the navigation to new pages.
+
+Now CTRL-C in your terminal and restart your app and restart your app from localhost:3000.
 
 You'll notice your language changes aren't persisting. To do that you'll have to save the changes to your browser.
+
+So how do we make these changes persist?
+
+![](https://cdn.hashnode.com/res/hashnode/image/upload/v1698768477628/f48e8dc1-c7af-4f5d-b96c-4e3cbc876998.jpeg align="center")
+
+### Persistence
 
 In this tutorial, we will be using \[local storage\]([https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage)) which allows web applications to store key-value pairs using a browser API.
 
 Modify components/LanguageSelector/index.tsx:
 
-```javascript
+```typescript
 import { useRouter } from "next/router";
 import { ChangeEvent, useEffect, useState } from "react";
 import { useTranslation } from "next-i18next";
@@ -945,8 +978,7 @@ const LanguageSelector = () => {
       locale: value,
     });
   };
-
-  const { t } = useTranslation("language-selector");
+  const { t } = useTranslation("navigation/language-selector");
   return (
         <div>
             <h2>{t("languageselector")}</h2>
@@ -961,7 +993,7 @@ const LanguageSelector = () => {
 export default LanguageSelector;
 ```
 
-Your code manages language selection for the web application by utilizing local state management with `useState`, utilizing router information with `useRouter`, saving and retrieving language preferences with `localStorage`which is part of the browser API.
+This revised component manages language selection for the web application by utilizing local state management with `useState`, utilizing router information with `useRouter`, saving and retrieving language preferences with `localStorage`which is part of the browser API.
 
 There are severe limitations to this implementation. Local storage will be specific to every browser & device you use. If you restart the app and use it on the same browser and device it will remember the selected language but not on other browsers & devices.
 
@@ -969,7 +1001,7 @@ There are severe limitations to this implementation. Local storage will be speci
 
 So how do we solve this problem?
 
-First, you'll need to implement user authentication. The user's language selection will be stored in the back-end database. If you want this selection to only apply during the current session you can use sessionStorage instead of localStorage.
+First, you'll need to implement user authentication. The user's language selection will be stored in the back-end database. If you want this persisted selection to only apply during the current session you can use sessionStorage instead of localStorage.
 
 This implementation will be covered in the upcoming part two of this blog!
 
@@ -977,18 +1009,20 @@ Before we end this tutorial, what self-respecting web application doesn't have a
 
 ## Testing
 
-We will be testing our simple application using two different types of tests. Unit tests and & end-to-end tests.
+We will be testing our simple application using three different types of tests. Unit tests, integration tests and & end-to-end(e2e) tests.
 
-Unit tests verify individual code components such as functions, methods, and classes, while end-to-end tests check the entire system's behavior from a user's viewpoint, covering multiple parts.
+Unit tests verify individual code components such as functions, methods, and classes, integration tests check out components are playing nice together, while end-to-end tests check the entire system's behavior from a user's viewpoint, covering multiple parts.
 
 ### Unit Tests
 
-1. Start by creating a new directory for your tests named `__tests__`, at the root of your project. This is where your test files will reside. Jest will automatically detect the `__tests__` folder's directories and run the test file.
-    
-2. In your terminal:
+Unit tests focus on isolated testing of small code components, like functions or methods, to ensure their correctness, and execution, and verify that specific functions behave as expected under various conditions, often using mocks and stubs for isolation.
+
+#### Installation
+
+1. **Install Jest and Testing Dependencies**:
     
     ```bash
-    npm install --save-dev jest @testing-library/react @testing-library/jest-dom
+    npm install --save-dev jest @testing-library/react @testing-library/jest-dom @testing-library/user-event ts-jest @types/jest jest-environment-jsdom wait-on
     ```
     
     * `jest`is a widely used JavaScript testing framework with test runners, assertions, and mocking features. Test runners execute your tests, assertions validate expected outcomes, and mocking features help you simulate external dependencies for more controlled and isolated testing.
@@ -997,31 +1031,303 @@ Unit tests verify individual code components such as functions, methods, and cla
         
     * `@testing-library/jest-dom` is an extension for Jest that simplifies testing React components by providing custom DOM element matchers and utilities.
         
-3. Create a Jest configuration file in your project's root directory named `jest.config.js`:
+    * `@type/jest` references to jest Typescript types.
+        
+    * `@testing-library/user-event` is a JavaScript library for simulating user interactions with web applications in a testing environment.
+        
+    * `ts-jest` is a tool used with Jest to facilitate the testing of TypeScript code, offering features like type-checking and TypeScript support within the testing environment.
+        
+    * `jest-environment-jsdom`
+        
+2. **Create a Jest Configuration File**:
     
-    ```javascript
-    codemodule.exports = {
-      testEnvironment: 'jsdom',
-        testRegex: '/__tests__/.*\\.spec\\.(jsx?|tsx?)$', //  Naming convention testname.spec.js, testname.spec.jsx, testname.spec.ts, or testname.spec.tsx.
-        moduleFileExtensions: ['js', 'jsx', 'ts', 'tsx'], // Include file extensions to consider as modules
-      // Other Jest configuration options...
+    Create a `jest.config.js` file in the root of your project with the following content
+    
+    ```typescript
+    module.exports = {
+      transform: {
+        '^.+\\.(ts|tsx)$': ['ts-jest', { tsconfig: './tsconfig.test.json' }],
+        '^.+\\.(js|jsx)$': 'babel-jest',
+      },
+      testRegex: '(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$',
+      moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
+      moduleNameMapper: {
+        '^src/(.*)$': '<rootDir>/src/$1',
+      },
+      testEnvironment: 'jest-environment-jsdom',
+      setupFilesAfterEnv: ['<rootDir>__tests__/setupTests.ts'], 
+      testPathIgnorePatterns: ['<rootDir>/__tests__/setupTests.ts', '<rootDir>/e2e/', ],
     };
     ```
     
-    Add the following scripts to your `package.json` to run the tests:
+3. Update package.json scripts:
     
-    ```json
+    ```typescript
     "scripts": {
-      "test": "jest",
-      "test:watch": "jest --watch",
-      // Other scripts...
+    // ...
+        "test": "jest",
+        "test:unit": "jest __tests__",
+        "test:integration": "jest __integration_tests__",
+        "test:watch": "jest --watch",
+        "test:e2e": "concurrently \"npm run dev\" \"npx wait-on http://localhost:3000 && npx playwright test\""
     }
     ```
     
+4. **Create a Jest Configuration File**:
+    
+    Create a `ts.config.js` file in the root of your project with the following content
+    
+    ```typescript
+    {
+        "extends": "./tsconfig.json",
+        "compilerOptions": {
+          "jsx": "react"
+        }
+      }
+    ```
+    
+5. **Create a** `__tests__` **Directory in the root directory and write your Tests**:
+    
+    Inside the `tests` directory, create `languageSelector.en.test.tsx` and `languageSelector.fr.test.tsx` .
+    
+    ```typescript
+    // languageSelector.en.test.tsx
+    import React from 'react';
+    import { fireEvent, render, screen } from '@testing-library/react';
+    import '@testing-library/jest-dom';
+    import LanguageSelector from '../src/components/LanguageSelector';
+    
+    // Mock the translation hook with a mocked implementation
+    jest.mock('next-i18next', () => ({
+      useTranslation: (namespace: string) => {
+        if (namespace === 'navigation/language-selector') {
+          const translations = {
+            languageselector: 'Language Selector',
+            english: 'English',
+            french: 'French',
+          };
+    
+          return {
+            t: (key: keyof typeof translations) => translations[key],
+            i18n: { language: 'en' },
+            ready: true,
+          };
+        }
+    
+        // Return a default implementation for other namespaces
+        return {
+          t: (key: string) => key,
+          i18n: { language: 'en' },
+          ready: true,
+        };
+      },
+    }));
+    
+    describe('LanguageSelector', () => {
+      it('renders in english', async () => {
+        await render(<LanguageSelector />);
+      
+        // Use the translated strings you expect to be rendered
+        expect(screen.getByText('Language Selector')).toBeInTheDocument();
+        expect(screen.getByText('English')).toBeInTheDocument();
+        expect(screen.getByText('French')).toBeInTheDocument();
+    
+         // Check if localStorage is initially empty
+         expect(localStorage.getItem('selectedLocale')).toBeNull();
+    
+         // Simulate changing the language to French
+         // screen.getByRole('combobox'): This part of the code uses the screen object provided by the
+         // @testing-library/react library. It looks for an element with the ARIA role of 'combobox'.
+         //  In HTML, a <select> element typically has this role when rendered.
+         fireEvent.change(screen.getByRole('combobox'), { target: { value: 'fr' } });
+     
+         // Check if the selectedLocale is updated in state
+         expect(localStorage.setItem).toHaveBeenCalledWith('selectedLocale', 'fr');
+         expect(localStorage.getItem('selectedLocale')).toBe('fr');
+      });
+    });
+    ```
+    
+    ```typescript
+    // languageSelector.fr.test.tsx
+    import React from 'react';
+    import { fireEvent, render, screen } from '@testing-library/react';
+    import '@testing-library/jest-dom';
+    import LanguageSelector from '../src/components/LanguageSelector';
+    
+    jest.mock('next-i18next', () => ({
+      useTranslation: (namespace: string) => {
+        if (namespace === 'navigation/language-selector') {
+          const translations = {
+            languageselector: 'Sélecteur de langue',
+            english: 'Anglais',
+            french: 'Français',
+          };
+    
+          return {
+            t: (key: keyof typeof translations) => translations[key],
+            i18n: { language: 'fr' },
+            ready: true,
+          };
+        }
+    
+        // Return a default implementation for other namespaces
+        return {
+          t: (key:string) => key,
+          i18n: { language: 'fr' },
+          ready: true,
+        };
+      },
+    }));
+    
+    describe('LanguageSelector - French', () => {
+      it('renders in French', async () => {
+        render(<LanguageSelector />);
+      
+        expect(screen.getByText('Sélecteur de langue')).toBeInTheDocument();
+        expect(screen.getByText('Anglais')).toBeInTheDocument();
+        expect(screen.getByText('Français')).toBeInTheDocument();
+    
+         // Check if localStorage is initially empty
+         expect(localStorage.getItem('selectedLocale')).toBeNull();
+    
+         // Simulate changing the language to French
+         // screen.getByRole('combobox'): This part of the code uses the screen object provided by the
+         // @testing-library/react library. It looks for an element with the ARIA role of 'combobox'.
+         //  In HTML, a <select> element typically has this role when rendered.
+         fireEvent.change(screen.getByRole('combobox'), { target: { value: 'en' } });
+     
+         // Check if the selectedLocale is updated in state
+         expect(localStorage.setItem).toHaveBeenCalledWith('selectedLocale', 'en');
+         expect(localStorage.getItem('selectedLocale')).toBe('en');
+      });
+    });
+    ```
+    
+6. Create `setupTests.ts` in `__test__` directory:
+    
+    ```typescript
+    import { jest } from '@jest/globals';
+    
+    // Mock the useRouter hook
+    jest.mock('next/router', () => ({
+        useRouter: () => ({
+          pathname: '/',
+          push: jest.fn(),
+          route: '/',
+          asPath: '/',
+          locale: 'en', 
+        }),
+      }));
+    
+      const localStorageMock = (() => {
+        let store: { [key: string]: string } = {};
+      
+        return {
+          getItem: jest.fn((key: string) => store[key] || null),
+          setItem: jest.fn((key: string, value: string) => {
+            store[key] = value.toString();
+          }),
+          removeItem: jest.fn((key: string) => {
+            delete store[key];
+          }),
+          clear: jest.fn(() => {
+            store = {};
+          }),
+        };
+      })();
+      
+      Object.defineProperty(window, 'localStorage', {
+        value: localStorageMock,
+      });
+    ```
+    
+7. **Run Tests**:
+    
+8. ```typescript
+          npm test
+    ```
+    
 
-#### Let's create some Tests!
+![](https://cdn.hashnode.com/res/hashnode/image/upload/v1700577311002/5c300053-22ca-4f93-807e-2d7bb89b26d0.jpeg align="center")
 
-Create
+### Integration tests
+
+Integration testing is like checking that all the pieces of a puzzle fit together properly to make the complete picture. It ensures that different parts of software work well when they're connected and used together.
+
+Create a \_\_intergration\_tests\_\_ directory in the root folder and a `Navbar.en.test.tsx` and `Navbar.fr.test.tsx` file inside.
+
+Add the following to respective English and French integration test files:
+
+```typescript
+// Navbar.en.test.js
+import React from 'react';
+import { render, screen } from '@testing-library/react';
+import '@testing-library/jest-dom'; 
+import Navbar from '../src/components/Navbar';
+
+jest.mock('react-i18next', () => ({
+  useTranslation: (): { t: (key: string) => string } => ({
+    t: (key: string): string => {
+      const translations: Record<string, string> = {
+        'languageselector': 'Language Selector',
+        'english': 'English',
+        'french': 'French',
+      };
+      return translations[key] || key;
+    },
+  }),
+}));
+
+describe('Navbar Langauge Selector Integration Test', () => {
+  it('English translation', async () => {
+    render(<Navbar />);
+      const languageSelector = screen.getByRole('combobox'); 
+    expect(languageSelector).toBeInTheDocument();
+    expect(screen.getByText('French')).toBeInTheDocument(); 
+    expect(screen.getByText('English')).toBeInTheDocument(); 
+    expect(screen.getByText('Language Selector')).toBeInTheDocument(); 
+  });
+});
+```
+
+```typescript
+// Navbar.fr.test.js
+import React from 'react';
+import { render, screen } from '@testing-library/react';
+import '@testing-library/jest-dom'; 
+import Navbar from '../src/components/Navbar';
+
+jest.mock('react-i18next', () => ({
+  useTranslation: (): { t: (key: string) => string } => ({
+    t: (key: string): string => {
+      const translations: Record<string, string> = {
+        'languageselector': 'Sélecteur de langue',
+        'english': 'Anglais',
+        'french': 'Francais',
+      };
+      return translations[key] || key;
+    },
+  }),
+}));
+
+describe('French Navbar Integration Test', () => {
+  it('French translation', async () => {
+    render(<Navbar />);
+      const languageSelector = screen.getByRole('combobox'); 
+    expect(languageSelector).toBeInTheDocument();
+    expect(screen.getByText('Francais')).toBeInTheDocument(); 
+    expect(screen.getByText('Anglais')).toBeInTheDocument(); 
+    expect(screen.getByText('Sélecteur de langue')).toBeInTheDocument(); 
+  });
+});
+```
+
+```typescript
+npm run test:integration
+```
+
+![](https://cdn.hashnode.com/res/hashnode/image/upload/v1701100851055/aa8a9232-ee82-44c6-b639-3f66c4cb8ca0.jpeg align="center")
 
 ### End to end(e2e) tests
 
@@ -1029,26 +1335,23 @@ We will be using \[Playwright\]([https://playwright.dev/](https://playwright.dev
 
 Software end-to-end testing (E2E) simulates real user scenarios to test an application's functionality from start to finish. An end-to-end test ensures that all the components of an application work together and behave correctly in a production-like environment.
 
-I would also recommend installing the developer extension for VS Code so the tests a applied in your browser and can be observed visually in action, enabling easy cross-browser testing and GitHub actions for CI/DC integration.
-
-%[https://www.youtube.com/watch?v=Xz6lhEzgI5I&t=44s] 
-
-```javascript
-npm init playwright
+```typescript
+npm init playwright@latest
 ```
 
-Choose a directory where your test files will live, choose no for GitHub actions, and finally yes to install/update playwright.
+Choose a directory where your test files will live(ie: e2e), choose yes for GitHub actions, and finally yes to install playwright browsers.
 
-```javascript
-npm init playwright
+```typescript
 Getting started with writing end-to-end tests with Playwright:
 Initializing project in '.'
-√ Where to put your end-to-end tests? · e2e 
-√ Add a GitHub Actions workflow? (y/N) · false
+√ Where to put your end-to-end tests? · e2e   
+√ Add a GitHub Actions workflow? (y/N) · true
 √ Install Playwright browsers (can be done manually via 'npx playwright install')? (Y/n) · true
 ```
 
-Playwright will create the following files:
+We created an `e2e` directory for our end-to-end tests. The GitHub Workflow we'll explain later in this tutorial and finally, we install Playwright browsers which will use to automate browser interactions in your tests
+
+`Playwright` will create the following files:
 
 ```javascript
 playwright.config.ts
@@ -1060,47 +1363,28 @@ tests-examples/
   demo-todo-app.spec.ts
 ```
 
-Update your package.json file:
-
-```javascript
-...
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint",
-    "test": "npx playwright test"
-  },
-```
-
-Let's start by creating 2 simple tests in "e2e/example.spec.ts" file:
+Let's create a e2e test for our language selector component in `e2e/LanguageSelector.spec.ts` file:
 
 ```javascript
 import { test, expect } from '@playwright/test';
 
-test('Check if the homepage loads and has the correct h1 text', async ({ page }) => {
+test('LanguageSelector component E2E test', async ({ page }) => {
   await page.goto('http://localhost:3000'); 
 
-  const h1Element = await page.$('h1');
+  const selectElement = await page.$('select'); 
+  expect(selectElement).not.toBeNull(); 
 
-  if(h1Element){
-    const h1Text = await h1Element.innerText();
-    expect(h1Text).toBe('Hello World!');
-  } else {
-    throw new Error('<h1> element not found on the page');
-  } 
-});
+  if (selectElement) {
+    await selectElement.click();
+    await selectElement.selectOption('fr');
 
-test('Check if the homepage loads and has the correct h1 text in french', async ({ page }) => {
-  await page.goto('http://localhost:3000/fr'); 
-  
-  const h1Element = await page.$('h1');
-  
-  if (h1Element) {
-    const h1Text = await h1Element.innerText();
-    expect(h1Text).toBe('Salut monde!');
-  } else {
-    throw new Error('<h1> element not found on the page');
+    await page.waitForURL("http://localhost:3000/fr");
+
+    const selectedOption = await page.$('select option:checked');
+
+    const selectedOptionText = await selectedOption?.textContent() ?? null;
+
+    expect(selectedOptionText?.trim()).toBe('Francais');
   }
 });
 ```
@@ -1108,120 +1392,44 @@ test('Check if the homepage loads and has the correct h1 text in french', async 
 In the terminal:
 
 ```javascript
-npx run test
+ npm run test:e2e
 
-npm run test
+> next-blog-edit@0.1.0 test:e2e
+> concurrently "npm run dev" "npx wait-on http://localhost:3000 && npx playwright test"
 
-> language-button@0.1.0 test
-> npx playwright test
-
-
-Running 2 tests using 2 workers
-  2 passed (5.0s)
-
-To open last HTML report run:
-
-  npx playwright show-report
+[0] 
+[0] > next-blog-edit@0.1.0 dev
+[0] > next dev
+[0] 
+[0]   ▲ Next.js 13.5.4
+[0]   - Local:        http://localhost:3000
+[0]   - Experiments (use at your own risk):
+[0]      · forceSwcTransforms
+[0]
+[0]  ✓ Ready in 6.1s
+[0]  ✓ Compiled /_error in 2.9s (360 modules)
+[0]  ⚠ Fast Refresh had to perform a full reload. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+[0]  ⚠ Fast Refresh had to perform a full reload. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+[1]
+[1] Running 1 test using 1 worker
+      1 passed (3.6s)
+[1]
+[1] To open last HTML report run:
+[1]
+[1]   npx playwright show-report
+[1]
+[1] npx wait-on http://localhost:3000 && npx playwright test exited with code 0
 ```
 
-Okay, so we now have a basic test in place. Let's simulate a user language change using our language selector. Let's update the e2e/example.spec.ts:
+We are using a script in `package.json` named `test:e2e` which concurrently runs the application and the e2e but uses `wait-on` which makes this process wait for the application to be running first to begin.
 
-```javascript
-test('Check if language selector is working when language is currently English and you select the French language option', async ({ page }) => {
-  // Navigate to the English version of the homepage
-  await page.goto('http://localhost:3000/');
+### Tada! :)
 
-  // Click on the dropdown to open it
-  await page.click('select#language-selector');
+I would also recommend installing the developer extension for VS Code. Playwright Chrome extension facilitates web automation and testing by enabling direct control and interaction with the Chrome browser, offering enhanced functionalities and debugging capabilities
 
-  // Wait for the "French" option to become visible in the dropdown
-  await page.waitForSelector('select#language-selector option[value="fr"]',{ state: 'attached' });
+\[Playwright VS Code Extension\]([https://playwright.dev/docs/getting-started-vscode](https://playwright.dev/docs/getting-started-vscode))
 
-
-// Use a more specific selector for the select element
-  const selectElement = await page.$('select#language-selector');
-
-  if (selectElement) {
-    // Select the "French" option by its value
-    await selectElement.selectOption({ value: 'fr' });
-  } else {
-    throw new Error('Select element not found on the page');
-  }
-  // Wait for the navigation to complete to the French version of the page
-    await page.waitForNavigation();
-
-  // Check the URL to ensure it has changed to the French version
-  const currentURL = page.url();
-  expect(currentURL).toBe('http://localhost:3000/fr')
-
-  // Check the content to verify it's in French
-  const h1Element = await page.$('h1');
-  if (h1Element) {
-    const h1Text = await h1Element.innerText();
-    expect(h1Text).toBe('Salut Monde!');
-  } else {
-    throw new Error('<h1> element not found on the page');
-  }
-});
-
-test('Check if language selector is working when language is currently French and you select the ENglish language option', async ({ page }) => {
-  // Navigate to the English version of the homepage
-  await page.goto('http://localhost:3000/fr');
-
-  // Click on the dropdown to open it
-  await page.click('select#language-selector');
-
-  // Wait for the "French" option to become visible in the dropdown
-  await page.waitForSelector('select#language-selector option[value="en"]',{ state: 'attached' });
-
-
-// Use a more specific selector for the select element
-  const selectElement = await page.$('select#language-selector');
-
-  if (selectElement) {
-    // Select the "French" option by its value
-    await selectElement.selectOption({ value: 'en' });
-  } else {
-    throw new Error('Select element not found on the page');
-  }
-  // Wait for the navigation to complete to the French version of the page
-    await page.waitForNavigation();
-
-  // Check the URL to ensure it has changed to the French version
-  const currentURL = page.url();
-  expect(currentURL).toBe('http://localhost:3000/')
-
-  // Check the content to verify it's in French
-  const h1Element = await page.$('h1');
-  if (h1Element) {
-    const h1Text = await h1Element.innerText();
-    expect(h1Text).toBe('Hello World!');
-  } else {
-    throw new Error('<h1> element not found on the page');
-  }
-});
-```
-
-```javascript
-npm run test
-
-> language-button@0.1.0 test
-> npx playwright test       
-
-
-Running 4 tests using 2 workers
-  4 passed (9.1s)
-
-To open last HTML report run:
-
-  npx playwright show-report 
-
-PS C:\Users\kmb_x\Programming\next-i18next-blog>
-```
-
-Tada! :)
-
-## Deploying ... Maybe?
+%[https://youtu.be/Xz6lhEzgI5I] 
 
 Before deploying you'll need to set up your project with Git and push the code to a GitHub repository.
 
@@ -1302,7 +1510,7 @@ Ok back to vercel!
 
 You can log in or signup @ \[Vercel\]([https://vercel.com/dashboard](https://vercel.com/dashboard))
 
-You will need to connect to a Git provider. If you followed the steps in regard to Git and GitHub earlier you can choose that account.
+You will need to connect to a Git provider. If you followed the steps in regards to Git and GitHub earlier you can choose that account.
 
 "Vercel is a popular cloud platform for deploying web applications and websites, with a strong focus on hosting modern frontend projects like React, Next.js, and Vue.js. It provides developers with a flexible and streamlined infrastructure for quick and easy web project deployment."
 
@@ -1324,7 +1532,37 @@ Click on "Visit"
 
 Your project is now deployed and available for showing to anyone using the URL in the browser.
 
+![](https://cdn.hashnode.com/res/hashnode/image/upload/v1698854081434/df615bd1-4531-442e-a974-ea7c8c2e09dc.jpeg align="center")
+
 ## Summary
+
+# Bonus Section!
+
+![](https://cdn.hashnode.com/res/hashnode/image/upload/v1698854171950/43a15021-c702-4b40-a4e7-f301b70dd20c.jpeg align="center")
+
+## CI GitHub Actions
+
+You might recall earlier when we installed Playwright we picked yes when asked `√ Add a GitHub Actions workflow? (y/N)` . This created a `playwright.yml` file inside a `.github/workflows` folder containing everything you need so that your tests run on each push and pull request into the main/master branch.
+
+So if you make a change to your project and push your code to GitHub the tests will be completed on the cloud.
+
+If you click on actions in your project repo tab:
+
+![](https://cdn.hashnode.com/res/hashnode/image/upload/v1701966279679/c47157e0-7ddf-4d15-85fa-3b4d4cf6e3e4.png align="center")
+
+And then ...
+
+![](https://cdn.hashnode.com/res/hashnode/image/upload/v1701966528536/9ca05e7d-15a9-4fd8-a0f8-486845e7f719.png align="center")
+
+And Finally...
+
+![](https://cdn.hashnode.com/res/hashnode/image/upload/v1701966582917/59cc2b1c-0644-4982-a31e-650df52d74ff.png align="center")
+
+![](https://cdn.hashnode.com/res/hashnode/image/upload/v1701966634176/3edf9be3-34d2-4b2f-ae0c-821f0e6b9aa6.png align="center")
+
+Oh oh!
+
+Our tests are set to run locally. We need an app running on the cloud for our CI Git Actions setup to work.
 
 ## Important Links
 
@@ -1390,3 +1628,14 @@ Next-i18next is a popular internationalization (i18n) library for Next.js applic
 12. **Cross-Browser Tests:** Test your i18n features across different browsers to ensure compatibility and consistent behavior.
     
 13. **Accessibility (a11y) Tests:** Verify that language changes do not introduce accessibility issues, such as broken focus or navigation.
+    
+
+Use this example to improve your blog esthetics:
+
+[https://dev.to/adrai/static-html-export-with-i18n-compatibility-in-nextjs-8cd](https://dev.to/adrai/static-html-export-with-i18n-compatibility-in-nextjs-8cd)
+
+Embedding stuff
+
+[https://support.hashnode.com/en/articles/6420731-adding-embeds-to-your-blog-post](https://support.hashnode.com/en/articles/6420731-adding-embeds-to-your-blog-post)
+
+[https://hashnode.com/post/adjust-image-size-in-blog-cksn9i4930yf01ws1d5q53glj](https://hashnode.com/post/adjust-image-size-in-blog-cksn9i4930yf01ws1d5q53glj)
